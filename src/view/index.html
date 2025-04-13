@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/lib/css/jquery.modal.min.css" />
+    <title>Modal with datepicker</title>
+</head>
+<body>
+    <button class="open-modal">
+        <a href="#datepicker" rel="modal:open">Open Modal</a>
+    </button>
+    <div class="main-modal-containers" style="display: none;">
+        <div class="section-datepicker">
+            <div id="datepicker" class="datepicker-modal">
+                <form action="" class="datepicker-form">
+                    <h3>Datepicker Form</h3>
+                    <div class="select-start-date-section">
+                        <label for="start-date">Start Date:</label><br/>
+                        <input type="text" name="start-date" id="start-date" class="start-date">
+                    </div>
+                    <div class="select-end-date-section">
+                        <label for="end-date">End Date:</label><br/>
+                        <input type="text" name="end-date" id="end-date" class="end-date">
+                    </div>
+                    <div class="datepicker-form-errors"></div>
+                    <input type="submit" value="Set">
+                    <a href="#" rel="modal:close">Cancel</a>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+<!-- jQuery Modal -->
+<script src="/lib/scripts/jquery.modal.min.js"></script>
+<!-- jQuery Datepicker -->
+ <script src="/lib/scripts/jquery.dateandtime.js">
+ </script>
+<script type="text/javascript">
+    const $startDate = $(".start-date");
+    const $endDate = $(".end-date");
+    const $datePickerFormErrors = $(".datepicker-form-errors");
+
+    $startDate.dateAndTime();
+    $endDate.dateAndTime();
+
+    $(".datepicker-form").on("submit", function (event) {
+        event.preventDefault();
+        $datePickerFormErrors.html();
+        
+        const startDate = new Date($startDate.val());
+        const endDate = new Date($endDate.val());
+
+        if (endDate.getTime() < startDate.getTime()) {
+            $datePickerFormErrors.html("<p class='error'>End date needs to be a period after start date</p>");
+        }
+    });
+</script>
+</html>
